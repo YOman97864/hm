@@ -1,0 +1,49 @@
+#include <iostream>
+#include <list>
+#include<algorithm>
+
+using namespace std;
+int main()
+{
+	/*int a = 15, b = 10;
+	auto f = [&a, b]() {
+	 a = 12;
+	 cout << a << "\n";
+	 cout << b << "\n";
+	 };
+	f();*/
+
+	/*int a = 15, b = 10;
+	auto f = [&]() {
+	 a = 12;
+	 cout << a << "\n";
+	 cout << b << "\n";
+	 };
+	f();*/
+
+	/*list<int> l = { 12,3,-55,33,4,99,-1,-2,-10 };
+	int value;
+	cout << "Enter value: ";
+	cin >> value;
+
+	l.remove_if([value](int el)->int {
+	 return el > value;
+	});
+
+	for (auto el : l)
+	 cout << el << " ";*/
+
+	list<int> l = { 12,3,-55,33,4,99,-1,-2,-10 };
+	int sum = 0;
+	for_each(l.begin(), l.end(), [&sum](int el) {
+		sum += el;
+		});
+
+	cout << "sum: " << sum;
+
+
+
+
+	cout << "\n\n";
+	return 0;
+}
