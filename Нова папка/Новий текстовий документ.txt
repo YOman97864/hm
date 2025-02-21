@@ -1,0 +1,85 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class A {
+	
+private:
+	class B {
+	public:
+		int b;
+		B():b(0){}
+		B(int b) {
+			this->b = b;
+		}
+		int GetB() {
+			return b;
+		}
+	};
+	int a;
+	B obj;
+public:
+	void method() {
+		B obj;
+		cout << obj.GetB() << "\n";
+		cout << obj.b;
+	}
+};
+
+
+#define SIZE 7
+
+class image {
+private:
+	class pixel {
+	private:
+		int r, g, b;
+	public:
+		pixel(int r, int g, int b) {
+			this->r = r;
+			this->g = g;
+			this->b = b;
+		}
+		string getInfo()const {
+			return "Pixel: r = " + to_string(r) + " g = " + to_string(g) + " b = " + to_string(b);
+		}
+
+	};
+	pixel pixels[SIZE]{
+		pixel(2,233,190),
+		pixel(2,233,16),
+		pixel(2,233,10),
+		pixel(2,233,7),
+		pixel(2,26,190),
+		pixel(9,233,190),
+		pixel(2,46,190)
+	};
+public:
+	void print() const {
+		for (int i = 0; i < SIZE; i++)
+		{
+			cout << "# " << i + 1 << pixels[i].getInfo() << "\n";
+		}
+	}
+};
+int main(){
+
+	//A obj1;
+	////A::B obj(2); // :: розширений контест
+	// 
+	//obj1.method();
+
+	image img;
+	img.print();
+
+
+
+
+
+
+
+
+
+
+
+}
