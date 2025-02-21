@@ -1,0 +1,177 @@
+#include <iostream>
+#include<vector>
+using namespace std;
+/*
+Агрегація -- визначає відносини між класами HAS A, тобто відношення "має".
+Два об'єкта будуть рівноправними
+*/
+
+class brain {
+public:
+	void method() {
+		cout << "BRAIN\n";
+	}
+};
+class cap{
+	string color;
+public:
+	cap(string color) {
+		this->color = color;
+	}
+	string getColor()const {
+		return color;
+	}
+};
+class human {
+	brain b;
+	cap* c;
+public:
+	human(cap* c) {
+		this->c = c;
+	}
+	void method() {
+		b.method();
+	}
+	void print()const {
+		cout << c->getColor() << " cap\n";
+	}
+};
+//task
+class citizen {
+	string name;
+public:
+	citizen(string name) {
+		this->name = name;
+	}
+	string getName()const {
+		return name;
+	}
+	void print()const {
+		cout << name << "\n";
+	}
+};
+#define SIZE 3
+class country {
+	citizen* a;
+public:
+	country (citizen* a) {
+		this->a = a;
+	}
+	void print()const {
+		for (int i = 0; i < SIZE; i++)
+		{
+			cout << a[i].getName() << "\n";
+		}
+	}
+};
+
+//hm
+
+class book {
+	string author;
+	string name;
+	int year;
+public:
+	book() : author(""), name(""), year(0) {}
+
+	// Конструктор з параметрами
+	book(string author, string name, int year)
+		: author(author), name(name), year(year) {}
+
+	// Геттери
+	string getAuthor() const { return author; }
+	string getName() const { return name; }
+	int getYear() const { return year; }
+
+	// Метод для виведення інформації про книгу
+	void printInfo() const {
+		cout << "Author: " << author << ", Title: " << name << ", Year: " << year << "\n";
+	}
+};
+class Shelf {
+	int number;
+	vector<book> books;
+public:
+	Shelf(int number) : number(number) {}
+
+	// Метод для додавання книги
+	void addBook(const book& book) {
+		books.push_back(book);
+	}
+
+	// Метод для видалення книги
+	void removeBook(const string& bookName) {
+		for (auto it = books.begin(); it != books.end(); ++it) {
+			if (it->getName() == bookName) {
+				books.erase(it);
+				cout << "Book \"" << bookName << "\" removed from shelf " << number << ".\n";
+				return;
+			}
+		}
+		cout << "Book \"" << bookName << "\" not found on shelf " << number << ".\n";
+	}
+
+	// Метод для виведення інформації про всі книги на полиці
+	void printBooks() const {
+		cout << "Shelf #" << number << " contains:\n";
+		if (books.empty()) {
+			cout << "No books on this shelf.\n";
+		}
+		else {
+			for (const auto& book : books) {
+				book.printInfo();
+			}
+		}
+	}
+
+	// Геттер для номера полиці
+	int getNumber() const { return number; }
+};
+
+int main()
+{
+	/*cap* c = new cap("red");
+	human h(c);
+	h.print();
+	h.method();
+
+	delete c;*/
+
+	citizen* a = new citizen[SIZE]{
+		 citizen("John"),
+		citizen("Far"),
+		 citizen("Tom") 
+	};
+	country b(a);
+	b.print();
+
+	delete[] a;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	return 0;
+	cout << "\n\n";
+}
+
+
