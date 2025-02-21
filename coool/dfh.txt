@@ -1,0 +1,329 @@
+#include <iostream>
+using namespace std;
+/*
+ Поліморфізм - це здатність коду при постійному вигляді змінювати свою поведінку, в
+ залежності від ситуації.
+
+ Поліморфізм буває:
+ 1. Статичний поліморфізм - реалізовується на основі перевантаження ф-цій та
+  операторів(раннє зв'язування).
+ 2. Динамічний поліморфізм - реалізовується на основі віртуальних ф-цій(пізнє зв'язуування)
+*/
+
+class A {
+	int a;
+public:
+	virtual void func() {
+		cout << "funcA()\n";
+	}
+}; 
+
+class B : public A {
+	int b;
+public:
+	void func() override {
+		cout << "funcB()\n";
+	}
+};
+
+class C : public A {
+	int c;
+public:
+	void func() override {
+		cout << "funcC()\n";
+	}
+};
+
+
+class vehicle {
+protected:
+	int speed;
+public:
+	vehicle(int speed) {
+		this->speed = speed;
+	}
+	virtual void drive()const {
+		cout << "Vehicle Speed: " << speed << "\n";
+	}
+};
+
+
+class car : public vehicle {
+public:
+	car(int speed) :vehicle(speed) {}
+	void drive()const override {
+		cout << "Car Speed: " << speed << "\n";
+	}
+};
+
+
+class bike : public vehicle {
+public:
+	bike(int speed) :vehicle(speed) {}
+	void drive()const override {
+		cout << "Bike Speed: " << speed << "\n";
+	}
+};
+
+class moto : public vehicle {
+public:
+	moto(int speed) :vehicle(speed) {}
+	void drive()const override {
+		cout << "Moto Speed: " << speed << "\n";
+	}
+};
+//-----------------------------------------------
+class weapon {
+public:
+	virtual void shoot() {
+	}
+};
+
+class gun : public weapon {
+public:
+	 void shoot()override {
+		cout << "weapon shoots!\n";
+	 }
+};
+class bazooka : public weapon {
+public:
+	void shoot()override {
+		cout << "weapon bom!\n";
+	}
+};
+
+class revoler : public weapon {
+public:
+	void shoot()override {
+		cout << "piu piu!\n";
+	}
+};
+
+class snipe : public weapon {
+public:
+	void shoot()override {
+		cout << "BUUUuuuux!\n";
+	}
+};
+
+class player {
+public:
+	void takeWeapon(weapon* w) {
+		w->shoot();
+	}
+};
+class oplata {
+public:
+	 virtual void oplat(){}
+};
+class cash : public oplata {
+public:
+	void oplat() override{
+		cout << ("cashh");
+	}
+};
+class card : public oplata {
+public:
+	void oplat() override {
+		cout << "card\n";
+	}
+};
+class Nfc : public oplata {
+public:
+	void oplat() override {
+		cout << "NFC";
+	}
+};
+class bankomat {
+public:
+	void takemoney(oplata* c) {
+		c->oplat();
+	}
+};
+
+#define SIZE 10
+class sortStrategy {
+public:
+	virtual void sort(int* arr) {}
+};
+
+class bubbleSortStrategy : public sortStrategy {
+public:
+	void sort(int* arr)override {
+		int tmp;
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = SIZE - 1; j > i; j--) {
+				if (arr[j] < arr[j - 1]) {            //ТУТ МІНЯТИ СТРІЛКУ ДЛЯ РІЗНОГО РЕЗУЛЬТАТУ
+					tmp = arr[j];
+					arr[j] = arr[j - 1];
+					arr[j - 1] = tmp;
+				}
+			}
+		}
+	}
+};
+
+class choiceSortStrategy : public sortStrategy {
+public:
+	void sort(int* arr)override {
+		int min = 0;
+		int buf = 0;
+		for (int i = 0; i < SIZE; i++)
+		{
+			min = i;
+			for (int j = i + 1; j < SIZE; j++)
+				min = (arr[j] < arr[min]) ? j : min;
+
+			if (i != min)
+			{
+				buf = arr[i];
+				arr[i] = arr[min];
+				arr[min] = buf;
+			}
+		}
+	}
+};
+
+
+class context {
+	int arr[SIZE]{ 12,-5,3,0,-12,3,54,9,4,5 };
+public:
+	void contextSort(sortStrategy* s) {
+		s->sort(this->arr);
+	}
+	void print()const {
+		for (int i = 0; i < SIZE; i++)
+			cout << arr[i] << " ";
+		cout << "\n";
+	}
+};
+
+int menuSort() {
+	int choice;
+	cout << "1 - Bubble Sort\n";
+	cout << "2 - Choice Sort\n";
+
+	cout << "Enter choice: ";
+	cin >> choice;
+	return choice;
+
+}
+int main()
+{
+	/*vehicle* veh = nullptr;
+
+	cout << "1 - Car\n";
+	cout << "2 - Bike\n";
+	cout << "3 - Moto\n";
+
+	int choice;
+	cout << "Enter choice: ";
+	cin >> choice;
+
+	switch (choice) {
+	case 1:
+		veh = new car(160);
+		break;
+	case 2:
+		veh = new bike(200);
+		break;
+	case 3:
+		veh = new moto(300);
+		break;
+	}*/
+
+	/*player p;
+	p.takeWeapon(new bazooka());
+	p.takeWeapon(new revoler());
+	p.takeWeapon(new snipe());*/
+
+	cout << "1- card\n";
+	cout << "2- cash\n";
+	cout << "3- Nfc\n";
+	bankomat a;
+	int choice;
+	cout << "enter choice: ";
+	cin >> choice;
+
+	switch (choice) {
+	case 1:
+		a.takemoney(new card());
+		break;
+	case 2:
+		a.takemoney(new cash());
+		break;
+	case 3:
+		a.takemoney(new Nfc());
+		break;
+	}
+
+	
+
+	context c;
+	cout << "Array: ";
+	c.print();
+
+	switch (menuSort()) {
+	case 1:
+		cout << "Bubble Sort: ";
+		c.contextSort(new bubbleSortStrategy());
+		break;
+	case 2:
+		cout << "Choice Sort: ";
+		c.contextSort(new choiceSortStrategy());
+		break;
+	}
+	c.print();
+
+
+
+
+	//A objA;
+	//B objB;
+	//C objC;
+
+	//objA.func();
+	//objB.func();
+	//objC.func();
+
+	//A* ptrA = nullptr;
+	//B* ptrB = nullptr;
+	//C* ptrC = nullptr;
+
+	//ptrA = &objA;
+	//ptrB = &objB;
+	//ptrC = &objC;
+
+	//ptrA->func();
+	//ptrB->func();
+	//ptrC->func();
+	//cout << "\n\n";
+
+	///*ptrA = &objB;
+	//ptrA->func();
+
+	//ptrA = &objC;
+	//ptrA->func();*/
+
+	//int choice;
+	//cout << "Enter choice: ";
+	//cin >> choice;
+
+	//switch (choice) {
+	//case 1:
+	// ptrA = &objB;
+	// break;
+	//case 2:
+	// ptrA = &objC;
+	// break;
+	//}
+
+	//ptrA->func();
+
+
+
+
+
+	cout << "\n\n";
+	return 0;
+}
